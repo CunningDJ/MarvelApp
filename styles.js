@@ -6,11 +6,20 @@ const STATUS_BAR_HEIGHT = 20;
 var styles = {
     "container": {
         "flex": 0.7,
-        "flexDirection": "column"
+        "flexDirection": "column",
+        "backgroundColor": "#1eff8d"
     },
-    "header": {
+    "mastHead": {
         "height": 75,
-        "backgroundColor": "black"
+        "backgroundColor": "#ff1e90"
+    },
+    "mastHeadText": {
+        "fontWeight": "bold",
+        "fontSize": 50,
+        "color": "white",
+        "flex": 1,
+        "justifyContent": "center",
+        "alignItems": "center"
     },
     "statusBar": {
         "height": Platform.select({

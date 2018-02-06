@@ -17,28 +17,33 @@ import keys from './keys';
 
 //  MARVEL
 const CHARACTERS_PATH = 'https://gateway.marvel.com:443/v1/public/characters';
+const TOTAL_CHARACTERS = 1490;
+const CHARACTER_LIST_SIZE = 20;
 //const CHARACTERS_PATH = 'https://gateway.marvel.com:443/v1/public/characters';
+
+function randomCharacterListOffset() {
+  return Math.floor(Math.random() * (TOTAL_CHARACTERS - CHARACTER_LIST_SIZE));
+}
 
 export function processCharacters(cb) {
   let { key, secretKey } = keys.marvel;
   let ts = new Date().getTime();
   let hashContent = ts + secretKey + key;
   let hash = md5hex(hashContent);
-  //let hash = cryptoJS.createHash('md5').update(hashContent).digest('hex');
-  console.log('key: %s secretKey: %s ts: %s', key, secretKey, ts);
+
   axios.get(
     CHARACTERS_PATH,
     {
       params: {
         apikey:  key,
         ts: ts,
-        hash: hash
+        hash: hash,
+        offset: randomCharacterListOffset()
       },
       responseType: 'json'
     }
   )
   .then((response) => {
-    console.log('resCharacters #:', response.data);
     let { results } = response.data.data;
     return cb(null, results);
   })

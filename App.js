@@ -21,6 +21,16 @@ export class DefaultStatusBar extends React.Component {
     }
 }
 
+export class MastHead extends React.Component {
+    render() {
+        return (
+            <View style={styles.mastHead}>
+                <Text h1 style={styles.mastHeadText}>{this.props.text}</Text>
+            </View>
+        );
+    }
+}
+
 
 // MARVEL CHARACTERS
 export default class CharactersList extends React.Component {
@@ -35,7 +45,7 @@ export default class CharactersList extends React.Component {
     console.log('Running API');
     api.processCharacters((err, characters) => {
         if (err) {
-            console.log(err);
+            return console.error(err);
         } else {
             this.setState({
                 characters
@@ -53,6 +63,7 @@ export default class CharactersList extends React.Component {
             <Header>HEADER</Header>
         </View>*/}
         <DefaultStatusBar/>
+        <MastHead text="Marvel Heroes"/>
         { characterViews(this.state.characters) }
       </ScrollView>
     );
@@ -66,7 +77,7 @@ function characterViews(characters) {
 
         let numComics = Object.keys(character.comics.items).length;
         numComics = numComics === 20 ? '20+' : new String(numComics)
-        console.log('imagePath:', imagePath);
+        //console.log('imagePath:', imagePath);
         return (
             // name, thumbnail, Object.keys(comics.items).length
             <View 
