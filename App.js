@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, ScrollView, Image, TextInput, StatusBar, Platform } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Image, TextInput, StatusBar, Platform, TouchableHighlight } from 'react-native';
 
 import { } from './util';
 
@@ -70,6 +70,19 @@ export default class CharactersList extends React.Component {
   }
 }
 
+export class FullScreenImage extends React.Component {
+
+    onPress() {
+        console.log('Full Screen Image pressed!');
+    }
+
+    render() {
+        <TouchableHighlight onPress={this.onPress}>
+            <Image style={styles.fullScreenImage} source={{ uri: this.props.uri }} />
+        </TouchableHighlight>
+    }
+}
+
 function characterViews(characters) {
     return characters.map((character, k) => {
         let th = character.thumbnail;
@@ -84,7 +97,9 @@ function characterViews(characters) {
                 style={styles.characterListItem}
                 key={k}
             >
-                <Image style={{ height: 60, width: 60 }} source={{ uri: imagePath }} />
+                <TouchableHighlight>
+                    <Image style={{ height: 60, width: 60 }} source={{ uri: imagePath }} />
+                </TouchableHighlight>
                 <Text h2>{character.name}</Text>
                 <Text># of comics: {numComics}</Text>
             </View>
