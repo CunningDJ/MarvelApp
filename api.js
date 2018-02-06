@@ -7,19 +7,10 @@ import axios from 'axios';
 
 import keys from './keys';
 
-/*function md5(hc) {
-  return {
-    digest: function() {
-      return '1234';
-    }
-  }
-}*/
-
 //  MARVEL
 const CHARACTERS_PATH = 'https://gateway.marvel.com:443/v1/public/characters';
 const TOTAL_CHARACTERS = 1490;
 const CHARACTER_LIST_SIZE = 20;
-//const CHARACTERS_PATH = 'https://gateway.marvel.com:443/v1/public/characters';
 
 function randomCharacterListOffset() {
   return Math.floor(Math.random() * (TOTAL_CHARACTERS - CHARACTER_LIST_SIZE));
@@ -51,25 +42,6 @@ export function processCharacters(cb) {
     return cb(err, null);
   });
 }
-
-/*
-request.get({ 
-    url: CHARACTERS_PATH, 
-    qs: { 
-      apikey:  key,
-      ts: ts,
-      hash: hash
-    },
-    json: true
-  }, function(err, response) {
-    if (err) {
-      return cb(err, null);
-    }
-    cb(null, response.body.data.results);
-  });
-*/
-
-
 
 
 let api = {

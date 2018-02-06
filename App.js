@@ -59,9 +59,6 @@ export default class CharactersList extends React.Component {
       <ScrollView
         style={styles.container}
       >
-        {/*<View style={styles.header}>
-            <Header>HEADER</Header>
-        </View>*/}
         <DefaultStatusBar/>
         <MastHead text="Marvel Heroes"/>
         { characterViews(this.state.characters) }
