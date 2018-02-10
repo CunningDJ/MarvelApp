@@ -43,8 +43,8 @@ var styles = {
     },
     fullScreenImage: {
         flex: 1,
-        flexDirection: 
-    }
+        flexDirection: 'column'
+    },
 
     halfHeight: {
         flex: 0.5,

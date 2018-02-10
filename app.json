@@ -2,7 +2,7 @@
   "expo": {
     "sdkVersion": "25.0.0",
     "name": "MarvelApp",
-    "icon": "./on.png",
+    "icon": "./img/on.png",
     "version": "0.1"
   }
 }

@@ -6,7 +6,10 @@
 # dependencies
 /node_modules
 
+# me
 *.DS_Store
+*sublime-workspace
+keys.json
 
 # misc
 .env.local
