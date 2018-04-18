@@ -1,7 +1,13 @@
 import { Platform } from 'react-native';
-import { isIOS } from './util';
+import { isIOS, isIphoneX } from './util';
 
-const STATUS_BAR_HEIGHT = 20;
+function iosStatusBarHeight() {
+    if (isIphoneX()) {
+        return 35;
+    } else {
+        return 20;
+    }
+}
 
 var styles = {
     container: {
@@ -23,7 +29,7 @@ var styles = {
     },
     statusBar: {
         height: Platform.select({
-            ios: STATUS_BAR_HEIGHT,
+            ios: iosStatusBarHeight(),
             android: 0
         }),
         backgroundColor: "dodgerblue"
