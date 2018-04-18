@@ -43,7 +43,7 @@ export default class CharactersList extends React.Component {
 
   componentDidMount() {
     console.log('Running API');
-    api.processCharacters((err, characters) => {
+    api.getMarvelCharacters((err, characters) => {
         if (err) {
             return console.error(err);
         } else {
