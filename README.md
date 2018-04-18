@@ -4,7 +4,7 @@ This is my first take at a mobile app.  It is created with react native, and tap
 
 ## Dependencies
 1. [NodeJS](https://nodejs.org/en/download/)
-2. [Expo app](https://expo.io/learn)
+2. [Expo app](https://expo.io/learn) (just follow the App links, the other steps aren't necessary.)
 
 ## Instructions
 1. Clone the repo
