@@ -74,12 +74,12 @@ const SUBPATHS = {
 
 // CONSTANTS: error messages
 
-const CHARACTERS_SUBPATH_ERR = subPathErr(CHARACTERS),
-      COMICS_SUBPATH_ERR = subPathErr(COMICS),
-      CREATORS_SUBPATH_ERR = subPathErr(CREATORS),
-      EVENTS_SUBPATH_ERR = subPathErr(EVENTS),
-      SERIES_SUBPATH_ERR = subPathErr(SERIES),
-      STORIES_SUBPATH_ERR = subPathErr(STORIES);
+const CHARACTERS_SUBPATH_ERR = _subPathErr(CHARACTERS),
+      COMICS_SUBPATH_ERR = _subPathErr(COMICS),
+      CREATORS_SUBPATH_ERR = _subPathErr(CREATORS),
+      EVENTS_SUBPATH_ERR = _subPathErr(EVENTS),
+      SERIES_SUBPATH_ERR = _subPathErr(SERIES),
+      STORIES_SUBPATH_ERR = _subPathErr(STORIES);
 
 // CONSTANTS: characters
 
