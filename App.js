@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, ScrollView, Image, TextInput, StatusBar, Platform, TouchableHighlight } from 'react-native';
 
-import { } from './util';
+// import { } from './util';
 
 import styles from './styles';
 import api from './api';
@@ -10,6 +10,8 @@ import api from './api';
 // Main
 console.log('Plat:', Platform)
 
+
+// CLASSES
 
 export class DefaultStatusBar extends React.Component {
     render() {
@@ -20,6 +22,7 @@ export class DefaultStatusBar extends React.Component {
         )
     }
 }
+
 
 export class MastHead extends React.Component {
     render() {
@@ -61,11 +64,12 @@ export default class CharactersList extends React.Component {
       >
         <DefaultStatusBar/>
         <MastHead text="Marvel Heroes"/>
-        { characterViews(this.state.characters) }
+        { characterListItems(this.state.characters) }
       </ScrollView>
     );
   }
 }
+
 
 export class FullScreenImage extends React.Component {
 
@@ -80,26 +84,35 @@ export class FullScreenImage extends React.Component {
     }
 }
 
-function characterViews(characters) {
-    return characters.map((character, k) => {
-        let th = character.thumbnail;
+
+export class CharacterListItem extends React.Component {
+    render() {
+        let th = this.props.character.thumbnail;
         let imagePath = th.path + '.' + th.extension;
 
-        let numComics = Object.keys(character.comics.items).length;
+        let numComics = Object.keys(this.props.character.comics.items).length;
         numComics = numComics === 20 ? '20+' : new String(numComics)
-        //console.log('imagePath:', imagePath);
         return (
-            // name, thumbnail, Object.keys(comics.items).length
             <View 
                 style={styles.characterListItem}
-                key={k}
             >
                 <TouchableHighlight>
                     <Image style={{ height: 60, width: 60 }} source={{ uri: imagePath }} />
                 </TouchableHighlight>
-                <Text h2>{character.name}</Text>
+                <Text h2>{this.props.character.name}</Text>
                 <Text># of comics: {numComics}</Text>
             </View>
+        );
+    }
+}
+
+
+// FUNCTIONS: util
+
+function characterListItems(characters) {
+    return characters.map((character, key) => {
+        return (
+            <CharacterListItem key={key} character={character} />
         )
     });
 }
