@@ -1,10 +1,10 @@
 # MarvelApp (CunningDJ)
 
-This is my first take at a mobile app.  It is created with react native, and tap into the Marvel API to grab and render a random list of Marvel characters.
+This is my first take at a mobile app.  It is created with react native, and taps into the Marvel API to grab and render a random list of Marvel characters.
 
 ## Dependencies
-1. NodeJS
-2. Expo app
+1. [NodeJS](https://nodejs.org/en/download/)
+2. [Expo app](https://expo.io/learn)
 
 ## Instructions
 1. Clone the repo
