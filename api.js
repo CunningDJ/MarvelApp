@@ -23,7 +23,7 @@ const COMICS = 'comics',
       CHARACTERS = 'characters',
       CREATORS = 'creators';
 
-// TODO: Take out the separate definitions of the base path, subpath, and error variables?  Could just use convenience
+// TODO: Take out the separate definitions of the base path, subpath, and error variables?  Could just use the convenience
 //       functions, but this frontloads the work.
 
 const CHARACTERS_BASE_PATH = gateP(CHARACTERS),
@@ -101,7 +101,9 @@ function randomCharacterListOffset() {
 export function getMarvelCharacters(cb) {
   axios.get(
     CHARACTERS_BASE_PATH,
-    apiParams({ offset: randomCharacterListOffset() })
+    apiParams({ 
+      offset: randomCharacterListOffset() }
+    )
   )
   .then((response) => {
     let { results } = response.data.data;
