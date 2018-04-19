@@ -101,13 +101,13 @@ export function getRandomMarvelCharacters(listSize, cb) {
   axios.get(
     CHARACTERS_BASE_PATH,
     apiParams({ 
-      offset: randomCharacterListOffset(listSize) }
-    )
+      offset: randomCharacterListOffset(listSize),
+      limit: listSize
+    })
   )
   .then((response) => {
-    // JSON data == response.data
+    // JSON response == response.data
     let { results } = response.data.data;
-    results = results.slice(0, listSize);
     return cb(null, results);
   })
   .catch((err) => {
