@@ -40,19 +40,22 @@ export default class CharactersList extends React.Component {
   constructor() {
     super();
     this.state = {
-        characters: []
-    }
+        characters: [],
+        listSize: 20
+    };
 
-    this.newCharactersList = this.newCharactersList.bind(this);
+    // binding
+    this.newRandomCharactersList = this.newRandomCharactersList.bind(this);
+    this.incrementListSize = this.incrementListSize.bind(this);
   }
 
   componentDidMount() {
     console.log('Running API');
-    this.newCharactersList();
+    this.newRandomCharactersList();
   }
 
-  newCharactersList() {
-    api.getMarvelCharacters((err, characters) => {
+  newRandomCharactersList() {
+    api.getRandomMarvelCharacters(this.state.listSize, (err, characters) => {
         if (err) {
             return console.error(err);
         } else {
@@ -63,6 +66,22 @@ export default class CharactersList extends React.Component {
     });
   }
 
+  incrementListSize(amount) {
+    // let listSize = this.listSize;
+    // console.log('LS:', listSize);
+    let MAX_LIST_SIZE = 20;
+    if (this.state.listSize === MAX_LIST_SIZE && amount >= 0) {
+        return;
+    }
+    let newSize = this.state.listSize + amount;
+    if (newSize > 20) {
+        newSize = 20;
+    }
+    this.setState({
+        listSize: newSize
+    });
+  }
+
   render() {
     return (
       <ScrollView
@@ -70,7 +89,19 @@ export default class CharactersList extends React.Component {
       >
         <DefaultStatusBar/>
         <MastHead text="Marvel Heroes"/>
-        <Button title="Refresh" color='white' onPress={this.newCharactersList} style={{color: 'white'}}/>
+        <View style={{backgroundColor: styles.color.tertiary}}>
+            {/* Refresh */}
+            <Button title="Refresh" color='white' onPress={this.newRandomCharactersList}/>
+            {/* Counter */}
+            <Text h2 style={{ color: 'black', backgroundColor: 'yellow', flex: 0.2, textAlign: 'center' }}>{this.state.listSize}</Text>
+            {/* Plus */}
+            <Button title="+" color='white' onPress={() => 
+                { this.incrementListSize(1); }
+            }
+            />
+            {/* Minus */}
+            <Button title="-" color='white' onPress={() => { this.incrementListSize(-1); }}/>
+        </View>
         { characterListItems(this.state.characters) }
       </ScrollView>
     );

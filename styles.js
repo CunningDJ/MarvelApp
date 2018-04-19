@@ -19,7 +19,7 @@ var styles = {
     container: {
         flex: 0.7,
         flexDirection: "column",
-        backgroundColor: color.tertiary
+        backgroundColor: color.secondary
     },
     mastHead: {
         height: 65,

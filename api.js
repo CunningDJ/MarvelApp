@@ -89,24 +89,25 @@ const CHARACTERS_SUBPATH_ERR = _subPathErr(CHARACTERS),
 
 // TODO: remove? (specific use case)
 const TOTAL_CHARACTERS = 1490;
-const CHARACTER_LIST_SIZE = 20;
 
 
 // FUNCTIONS: character listing (test function)
 
-function randomCharacterListOffset() {
-  return Math.floor(Math.random() * (TOTAL_CHARACTERS - CHARACTER_LIST_SIZE));
+function randomCharacterListOffset(characterListSize) {
+  return Math.floor(Math.random() * (TOTAL_CHARACTERS - characterListSize));
 }
 
-export function getMarvelCharacters(cb) {
+export function getRandomMarvelCharacters(listSize, cb) {
   axios.get(
     CHARACTERS_BASE_PATH,
     apiParams({ 
-      offset: randomCharacterListOffset() }
+      offset: randomCharacterListOffset(listSize) }
     )
   )
   .then((response) => {
+    // JSON data == response.data
     let { results } = response.data.data;
+    results = results.slice(0, listSize);
     return cb(null, results);
   })
   .catch((err) => {
@@ -215,7 +216,7 @@ function _apiBaseParams() {
 // EXPORTS
 
 let api = {
-  getMarvelCharacters,
+  getRandomMarvelCharacters,
   charP,
   comicsP,
   creatorsP,
