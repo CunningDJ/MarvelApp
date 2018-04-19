@@ -43,10 +43,14 @@ var styles = {
     characterListItem: {
         height: 100,
         backgroundColor: color.primary,
-        borderColor: "midnightblue",
+        borderColor: "dodgerblue",
         borderBottomWidth: 1
     },
-    characterListText: {
+    textSubHeader: {
+        color: 'white',
+        fontWeight: 'bold'
+    },
+    textMain: {
         color: 'white'
     },
     fullScreenImage: {

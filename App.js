@@ -106,8 +106,8 @@ export class CharacterListItem extends React.Component {
                 <TouchableHighlight>
                     <Image style={{ height: 60, width: 60 }} source={{ uri: imagePath }} />
                 </TouchableHighlight>
-                <Text h2 style={styles.characterListText}>{this.props.character.name}</Text>
-                <Text style={styles.characterListText}># of comics: {numComics}</Text>
+                <Text h2 style={styles.textSubHeader}>{this.props.character.name}</Text>
+                <Text style={styles.textMain}># of comics: {numComics}</Text>
             </View>
         );
     }
