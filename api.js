@@ -8,6 +8,10 @@ import axios from 'axios';
 
 import keys from './keys';
 
+// CONSTANTS: keys
+const { key, secretKey } = keys;
+
+
 //  CONSTANTS: paths
 
 const GATEWAY_BASE_PATH = 'https://gateway.marvel.com:443/v1/public';
@@ -95,22 +99,9 @@ function randomCharacterListOffset() {
 }
 
 export function getMarvelCharacters(cb) {
-  let { key, secretKey } = keys.marvel;
-  let ts = new Date().getTime();
-  let hashContent = ts + secretKey + key;
-  let hash = md5hex(hashContent);
-
   axios.get(
     CHARACTERS_BASE_PATH,
-    {
-      params: {
-        apikey:  key,
-        ts: ts,
-        hash: hash,
-        offset: randomCharacterListOffset()
-      },
-      responseType: 'json'
-    }
+    apiParams({ offset: randomCharacterListOffset() })
   )
   .then((response) => {
     let { results } = response.data.data;
@@ -198,6 +189,26 @@ function _apiPath(basePath, acceptedSubPaths, errMsg, id, subPath) {
   }
 }
 
+function apiParams(query) {
+  let params = Object.assign(_apiBaseParams(), query);
+
+  return {
+    params: params,
+    responseType: 'json'
+  }
+}
+
+function _apiBaseParams() {
+  let ts = new Date().getTime();
+  let hashContent = ts + keys.marvel.secretKey + keys.marvel.key;
+  let hash = md5hex(hashContent);
+
+  return {
+    apikey:  keys.marvel.key,
+    ts: ts,
+    hash: hash
+  }
+}
 
 // EXPORTS
 
