@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, ScrollView, Image, TextInput, StatusBar, Platform, TouchableHighlight } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Image, TextInput, StatusBar, Platform, TouchableHighlight, Button } from 'react-native';
 
 // import { } from './util';
 
@@ -42,10 +42,16 @@ export default class CharactersList extends React.Component {
     this.state = {
         characters: []
     }
+
+    this.newCharactersList = this.newCharactersList.bind(this);
   }
 
   componentDidMount() {
     console.log('Running API');
+    this.newCharactersList();
+  }
+
+  newCharactersList() {
     api.getMarvelCharacters((err, characters) => {
         if (err) {
             return console.error(err);
@@ -64,6 +70,7 @@ export default class CharactersList extends React.Component {
       >
         <DefaultStatusBar/>
         <MastHead text="Marvel Heroes"/>
+        <Button title="Refresh" color='white' onPress={this.newCharactersList} style={{color: 'white'}}/>
         { characterListItems(this.state.characters) }
       </ScrollView>
     );
@@ -99,8 +106,8 @@ export class CharacterListItem extends React.Component {
                 <TouchableHighlight>
                     <Image style={{ height: 60, width: 60 }} source={{ uri: imagePath }} />
                 </TouchableHighlight>
-                <Text h2>{this.props.character.name}</Text>
-                <Text># of comics: {numComics}</Text>
+                <Text h2 style={styles.characterListText}>{this.props.character.name}</Text>
+                <Text style={styles.characterListText}># of comics: {numComics}</Text>
             </View>
         );
     }

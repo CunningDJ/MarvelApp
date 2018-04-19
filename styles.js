@@ -1,6 +1,12 @@
 import { Platform } from 'react-native';
 import { isIOS, isIphoneX } from './util';
 
+const color = {
+    primary: '#10069F',
+    secondary: '#7C2855',
+    tertiary: '#AF272F'
+};
+
 function iosStatusBarHeight() {
     if (isIphoneX()) {
         return 35;
@@ -13,11 +19,11 @@ var styles = {
     container: {
         flex: 0.7,
         flexDirection: "column",
-        backgroundColor: "#1eff8d"
+        backgroundColor: color.tertiary
     },
     mastHead: {
-        height: 75,
-        backgroundColor: "#ff1e90"
+        height: 65,
+        backgroundColor: color.secondary
     },
     mastHeadText: {
         fontWeight: "bold",
@@ -32,34 +38,26 @@ var styles = {
             ios: iosStatusBarHeight(),
             android: 0
         }),
-        backgroundColor: "dodgerblue"
-        
-    },
-    movieListItem: {
-        height: 100,
-        backgroundColor: "cornsilk",
-        borderColor: "midnightblue",
-        borderBottomWidth: 1
+        backgroundColor: color.secondary
     },
     characterListItem: {
         height: 100,
-        backgroundColor: "dodgerblue",
+        backgroundColor: color.primary,
         borderColor: "midnightblue",
         borderBottomWidth: 1
+    },
+    characterListText: {
+        color: 'white'
     },
     fullScreenImage: {
         flex: 1,
         flexDirection: 'column'
     },
-
-    halfHeight: {
-        flex: 0.5,
-        backgroundColor: "blue"
+    charactersRefreshButton: {
+        color: color.tertiary,
+        title: 'Refresh'
     },
-    quarterHeight: {
-        flex: 0.25,
-        backgroundColor: "red"
-    }
+    color: color
 };
 
 export default styles;

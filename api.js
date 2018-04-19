@@ -202,7 +202,13 @@ function _apiPath(basePath, acceptedSubPaths, errMsg, id, subPath) {
 // EXPORTS
 
 let api = {
-  getMarvelCharacters
+  getMarvelCharacters,
+  charP,
+  comicsP,
+  creatorsP,
+  eventP,
+  seriesP,
+  storiesP
 }
 
 export default api;
