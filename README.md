@@ -9,7 +9,7 @@ This is my first take at a mobile app.  It is created with react native, and tap
 
 ## Instructions
 1. Clone the repo
-2. Make a `keys.json` file in the base path.  The json should have `key: [marvel API public key]` and `secretKey: [Marvel API private key]` under the key `marvel:` (Gist [here](https://gist.github.com/CunningDJ/cd16f7065efa9a676ef797e745bbdeec)).  Get the Marvel API keys [here](https://developer.marvel.com/account).
+2. Make a `keys.json` file in the base path (Gist [here](https://gist.github.com/CunningDJ/cd16f7065efa9a676ef797e745bbdeec)).  Get the Marvel API keys [here](https://developer.marvel.com/account).
 3. In the CLI at the base path:
     * Type `npm install`.  This will install the app.
     * Type `npm start`.  This will initialize the app
