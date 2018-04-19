@@ -5,7 +5,7 @@ This is my first take at a mobile app.  It is created with react native, and tap
 ## Dependencies
 1. [NodeJS](https://nodejs.org/en/download/)
 2. [Expo app](https://expo.io/learn) - Follow the App links, or search 'Expo' in your App Store. The other steps aren't necessary.
-3. [Marvel API Key](https://developer.marvel.com/account) - Need the secret and public keys.
+3. [Marvel API Keys](https://developer.marvel.com/account) - Need the secret and public keys.
 
 ## Instructions
 1. Clone the repo
