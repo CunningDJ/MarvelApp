@@ -55,7 +55,7 @@ export default class CharactersList extends React.Component {
   }
 
   newRandomCharactersList() {
-    api.getRandomMarvelCharacters(this.state.listSize, (err, characters) => {
+    api.getMarvelCharacters(this.state.listSize, { rand: true }, (err, characters) => {
         if (err) {
             return console.error(err);
         } else {
@@ -72,7 +72,10 @@ export default class CharactersList extends React.Component {
     let MAX_LIST_SIZE = 20;
     if (this.state.listSize === MAX_LIST_SIZE && amount >= 0) {
         return;
+    } else if (this.state.listSize == 0 && amount <= 0) {
+        return;
     }
+
     let newSize = this.state.listSize + amount;
     if (newSize > 20) {
         newSize = 20;

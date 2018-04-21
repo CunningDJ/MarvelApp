@@ -1,7 +1,7 @@
 'use strict';
 
 //import request from 'request';
-import { join } from 'path';
+import join from 'url-join';
 
 import md5hex from 'md5-hex';
 import axios from 'axios';
@@ -97,12 +97,51 @@ function randomCharacterListOffset(characterListSize) {
   return Math.floor(Math.random() * (TOTAL_CHARACTERS - characterListSize));
 }
 
-export function getRandomMarvelCharacters(listSize, cb) {
+function getMarvelCharacters(listSize, options, cb) {
+  /*
+  options: {
+    rand: bool [default:false],
+    offset: int [default:0],
+    nameStartsWith: string [default:undefined],
+    orderBy: string [default:undefined, options:['name', 'modified', '-name', '-modified']]
+  }
+  */
+
+  // establishing defaults
+  if (typeof(options) == 'undefined') {
+    options = {};
+  } else if (typeof(options) !== 'object') {
+    throw TypeError('[getMarvelCharacters] options must be an object');
+  }
+
+  let { rand, offset, nameStartsWith, orderBy } = options;
+
+  if (typeof(rand) == 'undefined') {
+    rand = false;
+  } else if (typeof(rand) !== 'boolean') {
+    throw TypeError('[getMarvelCharacters] options.rand must be a boolean');
+  }
+
+  if (typeof(offset) == 'undefined') {
+    if (rand) {
+      offset = randomCharacterListOffset(listSize);
+    } else {
+      offset = 0;
+    }
+  } else {
+    if (rand) {
+      throw Error('[getMarvelCharacters] Cannot have random: true and a defined offset for getMarvelCharacters');
+    } else if (!checkInt(offset)) {
+      throw TypeError('[getMarvelCharacters] options.offset must be an int');
+    }
+  }
+
   axios.get(
     CHARACTERS_BASE_PATH,
     apiParams({ 
-      offset: randomCharacterListOffset(listSize),
-      limit: listSize
+      offset: offset,
+      nameStartsWith: nameStartsWith,
+      orderBy: orderBy
     })
   )
   .then((response) => {
@@ -112,6 +151,25 @@ export function getRandomMarvelCharacters(listSize, cb) {
   })
   .catch((err) => {
     return cb(err, null);
+  });
+}
+
+
+function getMarvelCharacter(characterId, cb) {
+  if (!checkInty(characterId)) {
+    throw TypeError('[getMarvelCharacer] characterId must be int or string int');
+  }
+
+  var reqPath = charP(characterId);
+  axios.get(
+    reqPath,
+    apiParams({}),
+  )
+  .then((response) => {
+    return (cb(null, response.data.data.results[0]));
+  })
+  .catch((err) => {
+    return (cb(err, null));
   });
 }
 
@@ -176,11 +234,17 @@ function _subPathErr(pathType) {
 
 function _apiPath(basePath, acceptedSubPaths, errMsg, id, subPath) {
   let returnPath = basePath;
-  if (typeOf(id) === 'undefined') {
+  if (typeof(id) === 'undefined') {
     return returnPath;
   } else {
-    returnPath = join(returnPath, id)
-    if (typeOf(subPath) === 'undefined') {
+    if (!checkInty(id)) {
+      return TypeError('[_apiPath] ID must be int or string int');
+    } else if (checkInt(id)) {
+      id = id.toString();
+    }
+
+    returnPath = join(returnPath, id);
+    if (typeof(subPath) === 'undefined') {
       return returnPath;
     } else {
       if (_goodSubPath(subPath, acceptedSubPaths)) {
@@ -213,10 +277,20 @@ function _apiBaseParams() {
   }
 }
 
+function checkInty(val) {
+  // checks if int or string of int
+  return (parseInt(val) !== NaN && parseInt(val) === parseFloat(val));
+}
+
+function checkInt(val) {
+  return (typeof(val) == 'number' && parseInt(val) === parseFloat(val))
+}
+
 // EXPORTS
 
 let api = {
-  getRandomMarvelCharacters,
+  getMarvelCharacters,
+  getMarvelCharacter,
   charP,
   comicsP,
   creatorsP,
