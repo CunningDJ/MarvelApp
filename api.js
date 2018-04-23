@@ -7,6 +7,7 @@ import md5hex from 'md5-hex';
 import axios from 'axios';
 
 import keys from './keys';
+import { checkInt, checkInty } from './util';
 
 // CONSTANTS: keys
 const { key, secretKey } = keys;
@@ -277,14 +278,6 @@ function _apiBaseParams() {
   }
 }
 
-function checkInty(val) {
-  // checks if int or string of int
-  return (parseInt(val) !== NaN && parseInt(val) === parseFloat(val));
-}
-
-function checkInt(val) {
-  return (typeof(val) == 'number' && parseInt(val) === parseFloat(val))
-}
 
 // EXPORTS
 

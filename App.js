@@ -1,7 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text, View, ScrollView, Image, TextInput, StatusBar, Platform, TouchableHighlight, Button } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Image, TextInput, StatusBar, Platform, TouchableOpacity, Button } from 'react-native';
 
-// import { } from './util';
+ import { undef } from './util';
 
 import styles from './styles';
 import api from './api';
@@ -36,34 +36,58 @@ export class MastHead extends React.Component {
 
 
 // MARVEL CHARACTERS
-export default class CharactersList extends React.Component {
-  constructor() {
-    super();
+export default class CharactersListingView extends React.Component {
+  constructor(props) {
+    super(props);
+
     this.state = {
         characters: [],
         listSize: 20
     };
 
     // binding
-    this.newRandomCharactersList = this.newRandomCharactersList.bind(this);
+    this.newCharactersList = this.newCharactersList.bind(this);
     this.incrementListSize = this.incrementListSize.bind(this);
   }
 
   componentDidMount() {
     console.log('Running API');
-    this.newRandomCharactersList();
+    this.newCharactersList();
   }
 
-  newRandomCharactersList() {
-    api.getMarvelCharacters(this.state.listSize, { rand: true }, (err, characters) => {
-        if (err) {
-            return console.error(err);
-        } else {
-            this.setState({
-                characters
-            });
-        }
-    });
+  newCharactersList(options) {
+    if (typeof(options) === 'undefined') {
+        options = {}
+    }
+
+    let { rand, id } = options;
+    if (undef(rand)) {
+        rand = true;
+    }
+
+    if (!undef(id)) {
+        api.getMarvelCharacter(id, (err, character) => {
+            if (err) {
+                return console.error(err);
+            } else {
+                this.setState({
+                    characters: [character]
+                });
+            }
+        });
+    } else {
+        api.getMarvelCharacters(this.state.listSize, { rand }, (err, characters) => {
+            if (err) {
+                return console.error(err);
+            } else {
+                this.setState({
+                    characters
+                });
+            }
+        });
+    }
+
+    
   }
 
   incrementListSize(amount) {
@@ -94,7 +118,7 @@ export default class CharactersList extends React.Component {
         <MastHead text="Marvel Heroes"/>
         <View style={{backgroundColor: styles.color.tertiary}}>
             {/* Refresh */}
-            <Button title="Refresh" color='white' onPress={this.newRandomCharactersList}/>
+            <Button title="Refresh" color='white' onPress={this.newCharactersList}/>
             {/* Counter */}
             <Text h2 style={{ color: 'black', backgroundColor: 'yellow', flex: 0.2, textAlign: 'center' }}>{this.state.listSize}</Text>
             {/* Plus */}
@@ -105,50 +129,33 @@ export default class CharactersList extends React.Component {
             {/* Minus */}
             <Button title="-" color='white' onPress={() => { this.incrementListSize(-1); }}/>
         </View>
-        { characterListItems(this.state.characters) }
+        {/*<CharacterListItems characters={this.state.characters} />*/}
+        {characterListItems(this.state.characters)}
       </ScrollView>
     );
   }
 }
 
 
-export class FullScreenImage extends React.Component {
+/*export class CharacterListItems extends React.Component {
+    constructor(props) {
+        super(props);
 
-    onPress() {
-        console.log('Full Screen Image pressed!');
+        this.state = {
+            characters: props.characters
+        };
     }
 
     render() {
-        <TouchableHighlight onPress={this.onPress}>
-            <Image style={styles.fullScreenImage} source={{ uri: this.props.uri }} />
-        </TouchableHighlight>
-    }
-}
-
-
-export class CharacterListItem extends React.Component {
-    render() {
-        let th = this.props.character.thumbnail;
-        let imagePath = th.path + '.' + th.extension;
-
-        let numComics = Object.keys(this.props.character.comics.items).length;
-        numComics = numComics === 20 ? '20+' : new String(numComics)
         return (
-            <View 
-                style={styles.characterListItem}
-            >
-                <TouchableHighlight>
-                    <Image style={{ height: 60, width: 60 }} source={{ uri: imagePath }} />
-                </TouchableHighlight>
-                <Text h2 style={styles.textSubHeader}>{this.props.character.name}</Text>
-                <Text style={styles.textMain}># of comics: {numComics}</Text>
-            </View>
-        );
+            {this.state.characters.map((character, key) => {
+                return (
+                    <CharacterListItem key={key} character={character} />
+                )
+            });}
+        )
     }
-}
-
-
-// FUNCTIONS: util
+}*/
 
 function characterListItems(characters) {
     return characters.map((character, key) => {
@@ -157,3 +164,40 @@ function characterListItems(characters) {
         )
     });
 }
+
+
+export class CharacterListItem extends React.Component {
+    constructor(props) {
+        super(props);
+
+        // binding
+        this.openCharacter = this.openCharacter.bind(this);
+    }
+
+    /*openCharacter() {
+
+    }*/
+
+    render() {
+        let th = this.props.character.thumbnail;
+        let imagePath = th.path + '.' + th.extension;
+
+        let numComics = Object.keys(this.props.character.comics.items).length;
+        numComics = numComics === 20 ? '20+' : new String(numComics)
+        return (
+            <TouchableOpacity 
+                style={styles.characterListItem}
+                onPress={this.openCharacter}
+            >
+                {/*<TouchableHighlight>*/}
+                    <Image style={{ height: 60, width: 60 }} source={{ uri: imagePath }} />
+                {/*</TouchableHighlight>*/}
+                <Text h2 style={styles.textSubHeader}>{this.props.character.name}</Text>
+                <Text style={styles.textMain}># of comics: {numComics}</Text>
+            </TouchableOpacity>
+        );
+    }
+}
+
+
+// FUNCTIONS: util
