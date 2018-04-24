@@ -1,5 +1,13 @@
 import React from 'react';
 
-import CharacterListView from './views/CharacterListView';
+import RandomCharactersListing from './screens/RandomCharactersListing';
 
-export default CharacterListView;
+
+export default class App extends React.Component {
+
+    render() {
+        return (
+            <RandomCharactersListing/>
+        );
+    }
+}

@@ -4,6 +4,7 @@ import { StyleSheet, Text, View, ScrollView, Image, TextInput, Platform, Touchab
 // Components
 import DefaultStatusBar from '../components/DefaultStatusBar';
 import Masthead from '../components/Masthead';
+import CharacterList from '../components/CharacterList';
 
 //lib
 import { undef } from '../lib/util';
@@ -18,7 +19,7 @@ console.log('Plat:', Platform)
 
 
 // MARVEL CHARACTERS
-export default class CharactersListingView extends React.Component {
+export default class RandomCharactersListing extends React.Component {
   constructor(props) {
     super(props);
 
@@ -111,71 +112,9 @@ export default class CharactersListingView extends React.Component {
             <Button title="-" color='white' onPress={() => { this.incrementListSize(-1); }}/>
         </View>
         {/*<CharacterListItems characters={this.state.characters} />*/}
-        {characterListItems(this.state.characters)}
+        {/*characterListItems(this.state.characters)*/}
+        <CharacterList characters={this.state.characters}/>
       </ScrollView>
     );
   }
-}
-
-
-/*export class CharacterListItems extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            characters: props.characters
-        };
-    }
-
-    render() {
-        return (
-            {this.state.characters.map((character, key) => {
-                return (
-                    <CharacterListItem key={key} character={character} />
-                )
-            });}
-        )
-    }
-}*/
-
-function characterListItems(characters) {
-    return characters.map((character, key) => {
-        return (
-            <CharacterListItem key={key} character={character} />
-        )
-    });
-}
-
-
-export class CharacterListItem extends React.Component {
-    constructor(props) {
-        super(props);
-
-        // binding
-        this.openCharacter = this.openCharacter.bind(this);
-    }
-
-    openCharacter() {
-        return;
-    }
-
-    render() {
-        let th = this.props.character.thumbnail;
-        let imagePath = th.path + '.' + th.extension;
-
-        let numComics = Object.keys(this.props.character.comics.items).length;
-        numComics = numComics === 20 ? '20+' : new String(numComics)
-        return (
-            <TouchableOpacity 
-                style={styles.characterListItem}
-                onPress={this.openCharacter}
-            >
-                {/*<TouchableHighlight>*/}
-                    <Image style={{ height: 60, width: 60 }} source={{ uri: imagePath }} />
-                {/*</TouchableHighlight>*/}
-                <Text h2 style={styles.textSubHeader}>{this.props.character.name}</Text>
-                <Text style={styles.textMain}># of comics: {numComics}</Text>
-            </TouchableOpacity>
-        );
-    }
 }
