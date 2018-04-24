@@ -1,5 +1,5 @@
 import { Platform } from 'react-native';
-import { isIOS, isIphoneX } from './util';
+import { isIOS, isIphoneX } from '../lib/util';
 
 const color = {
     primary: '#10069F',
