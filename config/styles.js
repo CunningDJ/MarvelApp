@@ -31,7 +31,7 @@ var styles = {
     },
     mastheadText: {
         fontWeight: "bold",
-        fontSize: 50,
+        fontSize: 40,   // 50
         color: "white",
         flex: 1,
         justifyContent: "center",
