@@ -1,9 +1,8 @@
 import React from 'react';
-import { StyleSheet, Text, View, ScrollView, Image, TextInput, Platform, TouchableOpacity, Button } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Platform, TouchableOpacity, Button } from 'react-native';
 
 // Components
-import DefaultStatusBar from '../components/DefaultStatusBar';
-import Masthead from '../components/Masthead';
+import HeaderSection from '../components/HeaderSection';
 import CharacterList from '../components/CharacterList';
 
 //lib
@@ -17,6 +16,13 @@ import styles from '../config/styles';
 // Main
 console.log('Plat:', Platform)
 
+
+const newStyles = StyleSheet.create({
+    buttonViewStyle: {
+        backgroundColor: styles.color.secondary,
+
+    }
+}); 
 
 // MARVEL CHARACTERS
 export default class RandomCharactersListing extends React.Component {
@@ -74,8 +80,6 @@ export default class RandomCharactersListing extends React.Component {
   }
 
   incrementListSize(amount) {
-    // let listSize = this.listSize;
-    // console.log('LS:', listSize);
     let MAX_LIST_SIZE = 20;
     if (this.state.listSize === MAX_LIST_SIZE && amount >= 0 
         || this.state.listSize === 0 && amount <= 0) {
@@ -93,28 +97,36 @@ export default class RandomCharactersListing extends React.Component {
 
   render() {
     return (
-      <ScrollView
+      <View
         style={styles.container}
       >
-        <DefaultStatusBar/>
-        <Masthead text="Marvel Heroes"/>
-        <View style={{backgroundColor: styles.color.tertiary}}>
-            {/* Refresh */}
-            <Button title="Refresh" color='white' onPress={this.newCharactersList}/>
-            {/* Counter */}
-            <Text h2 style={{ color: 'black', backgroundColor: 'yellow', flex: 0.2, textAlign: 'center' }}>{this.state.listSize}</Text>
-            {/* Plus */}
-            <Button title="+" color='white' onPress={() => 
-                { this.incrementListSize(1); }
-            }
-            />
-            {/* Minus */}
-            <Button title="-" color='white' onPress={() => { this.incrementListSize(-1); }}/>
+        <HeaderSection text="Marvel Heroes (Rand)"/>
+        <View style={styles.bodySection}>
+            <View style={{backgroundColor: styles.color.tertiary, flex: 0.2, flexDirection: 'column' }}>
+                {/* Refresh */}
+                <View style={newStyles.buttonViewStyle}>
+                    <Button title="Refresh" color="white" onPress={this.newCharactersList} />
+                </View>
+                {/* Counter */}
+                <View style={newStyles.buttonViewStyle}>
+                    <Text style={{ color: 'black', backgroundColor: 'yellow', textAlign: 'center'}} h2 >{this.state.listSize}</Text>
+                </View>
+                {/* Plus */}
+                <View style={newStyles.buttonViewStyle}>
+                    <Button title="+" color='white' onPress={() => { this.incrementListSize(1); }} />
+                </View>
+                {/* Minus */}
+                <View style={newStyles.buttonViewStyle}>
+                    <Button title="-" color='white' onPress={() => { this.incrementListSize(-1); }} />
+                </View>
+            </View>
+            <View style={{ flex: 0.8, flexDirection: 'column'}}>
+                <ScrollView>
+                    <CharacterList characters={this.state.characters} />
+                </ScrollView>
+            </View>
         </View>
-        {/*<CharacterListItems characters={this.state.characters} />*/}
-        {/*characterListItems(this.state.characters)*/}
-        <CharacterList characters={this.state.characters}/>
-      </ScrollView>
+      </View>
     );
   }
 }

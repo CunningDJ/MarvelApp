@@ -2,6 +2,7 @@ import React from 'react';
 import { TouchableOpacity, Image, Text } from 'react-native';
 
 import styles from '../config/styles';
+import { undef } from '../lib/util';
 
 export default class CharacterList extends React.Component {
     constructor(props) {
@@ -9,7 +10,6 @@ export default class CharacterList extends React.Component {
     }
 
     render() {
-        //let characters = this.props.characters;
         return this.props.characters.map((character, key) => {
             return (
                 <CharacterListItem key={key} character={character} />

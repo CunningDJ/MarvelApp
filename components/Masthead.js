@@ -6,8 +6,8 @@ import styles from '../config/styles';
 export default class Masthead extends React.Component {
     render() {
         return (
-            <View style={styles.mastHead}>
-                <Text h1 style={styles.mastHeadText}>{this.props.text}</Text>
+            <View style={styles.masthead}>
+                <Text h1 style={styles.mastheadText}>{this.props.text}</Text>
             </View>
         );
     }

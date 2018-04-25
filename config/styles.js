@@ -1,4 +1,4 @@
-import { Platform } from 'react-native';
+import { Platform, Dimensions } from 'react-native';
 import { isIOS, isIphoneX } from '../lib/util';
 
 const color = {
@@ -7,25 +7,29 @@ const color = {
     tertiary: '#AF272F'
 };
 
-function iosStatusBarHeight() {
-    if (isIphoneX()) {
-        return 35;
-    } else {
-        return 20;
-    }
-}
+
+let iosStatusBarHeight = isIphoneX() ? 35 : 20;
+let mastheadHeight = 65;
+let headerSectionHeight = iosStatusBarHeight + mastheadHeight;
+let bodySectionHeight = Dimensions.get('window').height - headerSectionHeight;
 
 var styles = {
     container: {
-        flex: 0.7,
+        flex: 1.0,
         flexDirection: "column",
         backgroundColor: color.secondary
     },
-    mastHead: {
+    headerSection: {
+        height: headerSectionHeight
+    },
+    bodySection: {
+        height: bodySectionHeight
+    },
+    masthead: {
         height: 65,
         backgroundColor: color.secondary
     },
-    mastHeadText: {
+    mastheadText: {
         fontWeight: "bold",
         fontSize: 50,
         color: "white",
@@ -35,7 +39,7 @@ var styles = {
     },
     statusBar: {
         height: Platform.select({
-            ios: iosStatusBarHeight(),
+            ios: iosStatusBarHeight,
             android: 0
         }),
         backgroundColor: color.secondary
@@ -60,6 +64,13 @@ var styles = {
     charactersRefreshButton: {
         color: color.tertiary,
         title: 'Refresh'
+    },
+    searchBar: {
+        height: 40,
+        borderColor: 'gray',
+        borderWidth: 1,
+        borderRadius: 3,
+        backgroundColor: 'white'
     },
     color: color
 };
