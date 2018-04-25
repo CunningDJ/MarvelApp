@@ -3,6 +3,7 @@
     "sdkVersion": "25.0.0",
     "name": "MarvelApp",
     "icon": "./img/on.png",
-    "version": "0.1"
+    "version": "0.1",
+    "orientation": "portrait"
   }
 }
